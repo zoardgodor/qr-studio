@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#0b0d12">
+<title>QR Studio — QR-kód generátor</title>
+<style>
+:root{color-scheme:dark;--bg:#0b0d12;--panel:#12151d;--panel2:#181c26;--line:#292e3b;--muted:#9299aa;--text:#f1f3f8;--accent:#a6f36b;--accent2:#c5ff95;--danger:#ff7777}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 50% -25%,#202b29 0,transparent 50%),var(--bg);color:var(--text);font:15px/1.45 Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+button,input,select,textarea{font:inherit}button{cursor:pointer}.app{max-width:1200px;margin:auto;padding:28px 22px 48px}.top{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:26px}.brand{display:flex;align-items:center;gap:12px}.logo{display:grid;place-items:center;width:43px;height:43px;border-radius:14px;background:var(--accent);color:#10150d;font-weight:900;font-size:21px;box-shadow:0 0 32px #a6f36b24}.brand h1{font-size:19px;margin:0;letter-spacing:-.5px}.brand p{margin:2px 0 0;color:var(--muted);font-size:12px;letter-spacing:1.6px}.pill{border:1px solid var(--line);border-radius:99px;padding:8px 12px;color:#c6cbd7;font-size:12px}.layout{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(330px,.9fr);gap:20px;align-items:start}.panel{background:linear-gradient(180deg,#151923,#11141b);border:1px solid var(--line);border-radius:20px;overflow:hidden}.panel-head{padding:20px 22px 16px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:12px}.panel-head h2{font-size:16px;margin:0}.eyebrow{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:1.4px}.content{padding:21px 22px}.preview-area{padding:26px 22px 20px;display:flex;flex-direction:column;align-items:center}.qr-stage{width:min(100%,340px);aspect-ratio:1;background:#fff;border-radius:18px;display:grid;place-items:center;padding:14px;box-shadow:0 18px 60px #0006;overflow:hidden}.qr-stage canvas,.qr-stage svg,.qr-stage img{max-width:100%;max-height:100%;width:100%;height:100%;object-fit:contain}.preview-hint{color:var(--muted);font-size:12px;text-align:center;margin:14px 0 0}.preview-bottom{display:grid;grid-template-columns:1fr 1fr;gap:10px;width:100%;margin-top:22px}.stat{padding:13px 14px;border:1px solid var(--line);background:#0e1117;border-radius:12px}.stat span{display:block;color:var(--muted);font-size:11px;margin-bottom:4px}.stat strong{font-size:13px;font-weight:600}.actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px;width:100%}.btn{border:1px solid var(--line);background:#1b202b;color:var(--text);border-radius:11px;padding:12px 14px;font-weight:650;transition:.15s}.btn:hover{filter:brightness(1.12);transform:translateY(-1px)}.btn.primary{background:var(--accent);border-color:var(--accent);color:#11170c}.btn.full{width:100%;margin-top:10px}.btn.small{padding:8px 11px;font-size:12px}.section{margin-bottom:24px}.section:last-child{margin-bottom:0}.section-title{display:flex;align-items:center;justify-content:space-between;margin:0 0 13px;font-size:13px;font-weight:750}.section-title span{font-size:11px;color:var(--muted);font-weight:500}.types{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}.type{border:1px solid var(--line);background:#10131a;color:#b8bfcd;border-radius:11px;padding:10px 7px;font-size:12px}.type .ico{display:block;font-size:18px;margin-bottom:5px}.type.active{border-color:#a6f36b99;background:#a6f36b12;color:var(--accent2);box-shadow:inset 0 0 0 1px #a6f36b25}.field{margin-top:12px}.field label{display:block;color:#c5cad5;font-size:12px;margin-bottom:7px}.field input[type=text],.field input[type=url],.field input[type=email],.field input[type=tel],.field textarea,.field select{width:100%;border:1px solid var(--line);background:#0c0f15;color:var(--text);border-radius:10px;padding:11px 12px;outline:none}.field textarea{min-height:100px;resize:vertical}.field input:focus,.field textarea:focus,.field select:focus{border-color:#a6f36b99;box-shadow:0 0 0 3px #a6f36b12}.field small{display:block;color:var(--muted);font-size:11px;margin-top:6px}.two{display:grid;grid-template-columns:1fr 1fr;gap:12px}.three{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}.color-control{display:flex;align-items:center;gap:10px;border:1px solid var(--line);background:#0c0f15;padding:7px 10px;border-radius:10px}.color-control input[type=color]{width:28px;height:28px;border:0;padding:0;background:transparent}.color-control span{font-size:12px;color:#c5cad5}.swatches{display:flex;gap:8px;margin-top:9px;flex-wrap:wrap}.swatch{width:24px;height:24px;border:2px solid #ffffff30;border-radius:50%;padding:0}.choice-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.choice{background:#0c0f15;border:1px solid var(--line);border-radius:10px;color:#c2c7d2;padding:10px 6px;font-size:11px}.choice.active{border-color:var(--accent);color:var(--accent2);background:#a6f36b10}.range-line{display:flex;align-items:center;gap:12px}.range-line input{flex:1;accent-color:var(--accent);min-width:0}.range-line output{font-size:12px;color:var(--accent2);min-width:40px;text-align:right}.upload{display:block;border:1px dashed #414858;background:#0c0f15;border-radius:12px;padding:15px;text-align:center;color:#c2c8d5;font-size:12px}.upload input{display:block;width:100%;margin-top:9px;font-size:11px}.checkline{display:flex;align-items:center;gap:9px;color:#c5cad5;font-size:12px;margin-top:12px}.checkline input{accent-color:var(--accent)}.status{padding:12px 14px;border:1px solid var(--line);background:#0d1016;border-radius:11px;color:#c5cad5;font-size:12px;margin-top:12px;min-height:43px}.status.ok{border-color:#78c94e66;color:#c6ff9f}.status.bad{border-color:#ff777766;color:#ffaaaa}.footer{text-align:center;color:#747c8d;font-size:11px;margin-top:22px}.hidden{display:none!important}
+@media(max-width:850px){.layout{grid-template-columns:1fr}.preview-panel{order:-1}.app{padding:18px 13px 32px}.panel-head{padding:17px 18px}.content{padding:18px}.preview-area{padding:20px 18px}.qr-stage{width:min(78vw,320px)}.top{margin-bottom:18px}.pill{display:none}}
+@media(min-width:851px){.preview-panel{position:sticky;top:18px}}
+</style>
+</head>
+<body>
+<div class="app">
+<header class="top"><div class="brand"><div class="logo">▦</div><div><h1>QR Studio</h1><p>CREATE · CUSTOMIZE · TEST</p></div></div><div class="pill">● Helyben futó szerkesztő</div></header>
+<div class="layout">
+<section class="panel editor-panel">
+<div class="panel-head"><div><div class="eyebrow">01 / Tartalom</div><h2>Mit rejtsen a QR-kód?</h2></div></div>
+<div class="content">
+<div class="section">
+<div class="types" id="types">
+<button class="type active" data-type="text"><span class="ico">✎</span>Szöveg</button>
+<button class="type" data-type="url"><span class="ico">↗</span>Weboldal</button>
+<button class="type" data-type="phone"><span class="ico">⌕</span>Telefon</button>
+<button class="type" data-type="email"><span class="ico">✉</span>E-mail</button>
+<button class="type" data-type="sms"><span class="ico">▤</span>SMS</button>
+<button class="type" data-type="wifi"><span class="ico">⌁</span>Wi-Fi</button>
+</div>
+<div id="fields"></div>
+</div>
+<div class="section">
+<div class="section-title">02 / Színek <span>Kontraszt ajánlott</span></div>
+<div class="two">
+<div><label style="display:block;color:#c5cad5;font-size:12px;margin-bottom:7px">QR-kód színe</label><div class="color-control"><input id="dark" type="color" value="#10151d"><span id="darkHex">#10151D</span></div></div>
+<div><label style="display:block;color:#c5cad5;font-size:12px;margin-bottom:7px">Háttérszín</label><div class="color-control"><input id="light" type="color" value="#ffffff"><span id="lightHex">#FFFFFF</span></div></div>
+</div>
+<div class="swatches"><button class="swatch" style="background:#10151d" data-dark="#10151d" data-light="#ffffff" title="Alap"></button><button class="swatch" style="background:#a6f36b" data-dark="#18210f" data-light="#d9ffbf" title="Lime"></button><button class="swatch" style="background:#527bff" data-dark="#1735a0" data-light="#e6ecff" title="Kék"></button><button class="swatch" style="background:#d96aff" data-dark="#54116b" data-light="#ffe5ff" title="Lila"></button><button class="swatch" style="background:#ff8a55" data-dark="#7a2d0b" data-light="#fff0e5" title="Narancs"></button><button class="swatch" style="background:#ffffff" data-dark="#ffffff" data-light="#161a22" title="Fordított"></button></div>
+</div>
+<div class="section">
+<div class="section-title">03 / QR-stílus</div>
+<div class="field"><label>Pontok formája</label><div class="choice-grid" id="dotChoices"><button class="choice active" data-value="square">■ Négyzet</button><button class="choice" data-value="dots">● Kör</button><button class="choice" data-value="rounded">▦ Lekerekített</button></div></div>
+<div class="field"><label>Sarokkeret formája</label><div class="choice-grid" id="cornerChoices"><button class="choice active" data-value="square">Négyzet</button><button class="choice" data-value="extra-rounded">Lekerekített</button><button class="choice" data-value="dot">Kör</button></div></div>
+<div class="field"><label>Sarokszem belső formája</label><div class="choice-grid" id="eyeChoices"><button class="choice active" data-value="square">Négyzet</button><button class="choice" data-value="dot">Kör</button><button class="choice" data-value="extra-rounded">Lágy</button></div></div>
+<div class="field"><label>Hibajavítási szint</label><select id="ecc"><option value="L">L — Alacsony (~7%)</option><option value="M" selected>M — Közepes (~15%)</option><option value="Q">Q — Magas (~25%)</option><option value="H">H — Nagyon magas (~30%)</option></select><small>Logó használatakor a Q vagy H szint javasolt. A ténylegesen visszaolvashatóságot mindig teszteld.</small></div>
+<div class="field"><label>QR-kód mérete</label><div class="range-line"><input id="size" type="range" min="220" max="1000" step="20" value="480"><output id="sizeOut">480 px</output></div></div>
+</div>
+<div class="section">
+<div class="section-title">04 / Középső kép <span>Opcionális</span></div>
+<label class="upload">＋ Logó vagy kép kiválasztása<input id="image" type="file" accept="image/*"></label>
+<div class="two field"><div><label>Logó mérete</label><div class="range-line"><input id="logoSize" type="range" min="10" max="35" value="24"><output id="logoSizeOut">24%</output></div></div><div><label>Logó mögötti háttér</label><select id="logoBg"><option value="white">Fehér</option><option value="match">QR-háttér színe</option></select></div></div>
+<button class="btn small full" id="removeImage" type="button">Kép eltávolítása</button>
+</div>
+</div>
+</section>
+<section class="panel preview-panel">
+<div class="panel-head"><div><div class="eyebrow">Élő előnézet</div><h2>A te QR-kódod</h2></div><span class="pill" id="liveBadge">● Frissítve</span></div>
+<div class="preview-area">
+<div class="qr-stage" id="qrStage"><div style="color:#111;font-size:13px">QR-kód készítése…</div></div>
+<p class="preview-hint">Olvasd be a telefonod kamerájával, vagy használd a beépített tesztet.</p>
+<div class="preview-bottom"><div class="stat"><span>FORMÁTUM</span><strong>PNG · nagy felbontás</strong></div><div class="stat"><span>HIBAJAVÍTÁS</span><strong id="eccStat">M · Közepes</strong></div></div>
+<div class="actions"><button class="btn primary" id="download">↓ QR-kód mentése</button><button class="btn" id="test">✓ Leolvashatóság tesztje</button></div>
+<div class="status" id="status" aria-live="polite">Adj meg tartalmat a QR-kód elkészítéséhez.</div>
+<div class="field" style="width:100%;margin-top:18px"><label>Visszaolvasás — mit tartalmaz a QR?</label><textarea id="decoded" readonly placeholder="A teszt eredménye itt jelenik meg…"></textarea></div>
+</div>
+</section>
+</div>
+<div class="footer">QR Studio · A tartalom a böngésződben készül. A könyvtárak betöltéséhez internetkapcsolat szükséges.</div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/qr-code-styling@1.6.0/lib/qr-code-styling.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.js"></script>
+<script>
+(() => {
+const $ = s => document.querySelector(s);
+const state = {type:'text',dot:'square',corner:'square',eye:'square',image:null,logoData:null};
+const fields = $('#fields');
+const fieldMarkup = {
+ text:`<div class="field"><label for="textValue">Szöveg</label><textarea id="textValue" placeholder="Írd ide a QR-kódba kerülő szöveget…">Szia! Ezt a QR-kódot a QR Studio készítette.</textarea></div>`,
+ url:`<div class="field"><label for="urlValue">Webcím (URL)</label><input id="urlValue" type="url" placeholder="https://pelda.hu" value="https://example.com"><small>Ha hiányzik a https:// előtag, automatikusan hozzáadjuk.</small></div>`,
+ phone:`<div class="field"><label for="phoneValue">Telefonszám</label><input id="phoneValue" type="tel" placeholder="+36 30 123 4567" value="+36 30 123 4567"><small>A telefon kamerája felajánlhatja a szám tárcsázását.</small></div>`,
+ email:`<div class="field"><label for="emailValue">E-mail-cím</label><input id="emailValue" type="email" placeholder="nev@pelda.hu" value="hello@example.com"></div><div class="field"><label for="subjectValue">Tárgy (opcionális)</label><input id="subjectValue" type="text" placeholder="Üzenet tárgya"></div><div class="field"><label for="bodyValue">Üzenet (opcionális)</label><textarea id="bodyValue" placeholder="Az e-mail szövege…"></textarea></div>`,
+ sms:`<div class="field"><label for="smsPhone">Telefonszám</label><input id="smsPhone" type="tel" placeholder="+36 30 123 4567" value="+36 30 123 4567"></div><div class="field"><label for="smsBody">Előre megírt SMS (opcionális)</label><textarea id="smsBody" placeholder="Szia!"></textarea></div>`,
+ wifi:`<div class="field"><label for="wifiName">Wi-Fi-hálózat neve (SSID)</label><input id="wifiName" type="text" placeholder="Hálózat neve"></div><div class="field"><label for="wifiPassword">Jelszó</label><input id="wifiPassword" type="text" placeholder="Wi-Fi-jelszó"></div><div class="field"><label for="wifiSecurity">Biztonság</label><select id="wifiSecurity"><option value="WPA">WPA/WPA2/WPA3</option><option value="WEP">WEP</option><option value="nopass">Nyílt hálózat — nincs jelszó</option></select></div><label class="checkline"><input id="wifiHidden" type="checkbox"> Rejtett hálózat</label>`
+};
+function renderFields(){fields.innerHTML=fieldMarkup[state.type];fields.querySelectorAll('input,textarea,select').forEach(el=>el.addEventListener('input',generate));generate();}
+function escWifi(s){return String(s).replace(/([\\;,:"])/g,'\\$1');}
+function getValue(){
+ const v=id=>($('#'+id)?.value||'').trim();
+ switch(state.type){
+ case 'text': return v('textValue');
+ case 'url': {let u=v('urlValue'); if(u && !/^[a-z][a-z0-9+.-]*:/i.test(u))u='https://'+u;return u;}
+ case 'phone': return v('phoneValue') ? 'tel:'+v('phoneValue').replace(/\s+/g,'') : '';
+ case 'email': {let e=v('emailValue');if(!e)return '';let s=v('subjectValue'),b=v('bodyValue');return 'mailto:'+e+(s||b?'?'+[s?'subject='+encodeURIComponent(s):'',b?'body='+encodeURIComponent(b):''].filter(Boolean).join('&'):'');}
+ case 'sms': {let n=v('smsPhone');return n?'SMSTO:'+n.replace(/\s+/g,'')+(v('smsBody')?':'+v('smsBody'):''):'';}
+ case 'wifi': {let n=v('wifiName');if(!n)return '';let sec=v('wifiSecurity');return `WIFI:T:${sec};S:${escWifi(n)};P:${sec==='nopass'?'':escWifi(v('wifiPassword'))};${$('#wifiHidden').checked?'H:true;':''};`;}
+ }
+ return '';
+}
+function setStatus(msg,kind=''){const el=$('#status');el.className='status '+kind;el.textContent=msg;}
+let qr=null, timer=null;
+function generate(){
+ if(!window.QRCodeStyling){$('#qrStage').innerHTML='<div style="color:#111;font-size:13px;text-align:center;padding:20px">A QR-kód könyvtár betöltése folyamatban…<br>Ehhez internetkapcsolat kell.</div>';return;}
+ const value=getValue();
+ const size=Number($('#size').value),dark=$('#dark').value,light=$('#light').value,ecc=$('#ecc').value;
+ $('#darkHex').textContent=dark.toUpperCase();$('#lightHex').textContent=light.toUpperCase();$('#sizeOut').textContent=size+' px';$('#logoSizeOut').textContent=$('#logoSize').value+'%';
+ $('#eccStat').textContent=ecc+' · '+({L:'Alacsony',M:'Közepes',Q:'Magas',H:'Nagyon magas'}[ecc]);
+ if(!value){$('#qrStage').innerHTML='<div style="color:#111;font-size:13px;text-align:center;padding:20px">Írj be tartalmat a QR-kód elkészítéséhez.</div>';setStatus('Adj meg tartalmat a QR-kód elkészítéséhez.');return;}
+ const options={width:size,height:size,type:'canvas',data:value,margin:10,qrOptions:{errorCorrectionLevel:ecc},dotsOptions:{color:dark,type:state.dot},backgroundOptions:{color:light},cornersSquareOptions:{color:dark,type:state.corner},cornersDotOptions:{color:dark,type:state.eye}};
+ if(state.logoData){options.image=state.logoData;options.imageOptions={hideBackgroundDots:true,imageSize:Number($('#logoSize').value)/100,margin:4,crossOrigin:'anonymous'};if($('#logoBg').value==='white')options.imageOptions.backgroundColor='#ffffff';}
+ try{
+ if(!qr)qr=new QRCodeStyling(options);else qr.update(options);
+ $('#qrStage').innerHTML='';qr.append($('#qrStage'));$('#liveBadge').textContent='● Frissítve';$('#decoded').value='';setStatus('A QR-kód elkészült. A tényleges olvashatóságot a teszttel is ellenőrizheted.');
+ }catch(e){setStatus('Nem sikerült létrehozni a QR-kódot. Rövidítsd a tartalmat vagy módosítsd a beállításokat.','bad');}
+}
+$('#types').addEventListener('click',e=>{const b=e.target.closest('[data-type]');if(!b)return;state.type=b.dataset.type;document.querySelectorAll('.type').forEach(x=>x.classList.toggle('active',x===b));renderFields();});
+function bindChoices(id,key){$('#'+id).addEventListener('click',e=>{const b=e.target.closest('[data-value]');if(!b)return;state[key]=b.dataset.value;$('#'+id).querySelectorAll('.choice').forEach(x=>x.classList.toggle('active',x===b));generate();});}
+bindChoices('dotChoices','dot');bindChoices('cornerChoices','corner');bindChoices('eyeChoices','eye');
+['dark','light','ecc','size','logoSize','logoBg'].forEach(id=>$('#'+id).addEventListener('input',generate));
+document.querySelectorAll('.swatch').forEach(b=>b.addEventListener('click',()=>{$('#dark').value=b.dataset.dark;$('#light').value=b.dataset.light;generate();}));
+$('#image').addEventListener('change',e=>{const file=e.target.files?.[0];if(!file)return;if(file.size>5*1024*1024){setStatus('A kép legfeljebb 5 MB lehet.','bad');e.target.value='';return;}const reader=new FileReader();reader.onload=()=>{state.logoData=reader.result;generate();};reader.readAsDataURL(file);});
+$('#removeImage').addEventListener('click',()=>{state.logoData=null;$('#image').value='';generate();});
+$('#download').addEventListener('click',()=>{if(!qr||!getValue()){setStatus('Előbb adj meg érvényes tartalmat.','bad');return;}qr.download({name:'qr-studio',extension:'png'});setStatus('A PNG-mentés elindult.','ok');});
+$('#test').addEventListener('click',async()=>{
+ if(!qr||!getValue()){setStatus('Nincs tesztelhető QR-kód.','bad');return;}
+ setStatus('Leolvashatóság ellenőrzése…');$('#decoded').value='';
+ try{
+ const blob=await qr.getRawData('png');const bitmap=await createImageBitmap(blob);
+ const canvas=document.createElement('canvas');canvas.width=bitmap.width;canvas.height=bitmap.height;
+ const ctx=canvas.getContext('2d',{willReadFrequently:true});ctx.drawImage(bitmap,0,0);
+ if(!window.jsQR)throw new Error('A dekódoló könyvtár nem töltődött be.');
+ const result=jsQR(ctx.getImageData(0,0,canvas.width,canvas.height).data,canvas.width,canvas.height,{inversionAttempts:'attemptBoth'});
+ if(result && result.data===getValue()){$('#decoded').value=result.data;setStatus('Sikeres teszt: a QR-kód visszaolvasható, a tartalom egyezik.','ok');}
+ else if(result){$('#decoded').value=result.data;setStatus('A kód olvasható, de a visszaolvasott tartalom eltér a várttól.','bad');}
+ else{setStatus('A beépített teszt nem tudta dekódolni ezt a QR-kódot. Próbálj nagyobb hibajavítást, erősebb kontrasztot vagy kisebb logót.','bad');}
+ }catch(err){setStatus('A teszt nem futott le: '+(err.message||'ismeretlen hiba')+'. Ellenőrizd az internetkapcsolatot, vagy próbáld ki telefonkamerával.','bad');}
+});
+renderFields();
+})();
+</script>
+</body>
+</html>
